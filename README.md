@@ -1,67 +1,68 @@
-Sure! Here's the plain text version of the README without any emojis:
+Sure! Here's a clean, all-text version of your `README.md` without any emojis or images:
 
 ---
 
-# Stock Viewer – Django App
+````markdown
+# Django Stock Viewer
 
-**Stock Viewer** is a Django-based web application that helps users explore and analyze stock market data with the assistance of AI.
+A Django web application that allows users to explore stock data, view visual charts, receive AI-generated insights using Google's Gemini API, and interact with an educational chatbot to learn about stock trading.
 
 ## Features
 
-* Stock Chart Visualization
-  View closing prices, volume, and 10-day moving averages using Matplotlib.
+- Search and analyze any stock ticker (e.g., AAPL, MSFT, TSLA)
+- Automatically generated charts:
+  - Closing prices
+  - Volume
+  - Moving averages
+- AI analysis using Gemini:
+  - Technical recommendations (Buy/Sell/Hold)
+  - Summary insights based on historical data
+- Chatbot for learning about stock trading
+- Curated educational articles for beginners
 
-* AI Stock Insights (Gemini API)
-  Get technical recommendations and quick analysis powered by Google's Gemini.
+## Demo
 
-* Interactive Stock Chatbot
-  Ask questions about trading, investing, or stocks and receive AI-driven answers.
-
-* Currency Exchange Widget (Optional)
-  Real-time USD to EUR conversion using CURRENCY\_API.
-
-* Learning Resources
-  Curated articles to help beginners understand stock trading concepts.
+Watch a short demo here:  
+https://youtu.be/plwx20ybDuY
 
 ## Getting Started
 
-1. Clone the repo
-
-   ```
-   git clone https://github.com/your-username/stock-viewer.git
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/stock-viewer.git
    cd stock-viewer
-   ```
+````
 
-2. Install dependencies
+2. Install dependencies:
 
-   ```
+   ```bash
    pip install -r requirements.txt
    ```
 
-3. Add your API keys to `views.py`
-
-   * ALPHA\_VANTAGE\_API\_KEY
-   * GEMINI\_API\_KEY
-   * (Optional) CURRENCY\_API\_KEY
-
-4. Run the development server
+3. Set your environment variables in a `.env` file:
 
    ```
+   ALPHA_VANTAGE_API_KEY=your_key_here
+   GEMINI_API_KEY=your_key_here
+   ```
+
+4. Run the Django server:
+
+   ```bash
    python manage.py runserver
+   ```
+
+5. Open your browser and go to:
+
+   ```
+   http://127.0.0.1:8000/
    ```
 
 ## Tech Stack
 
-* Backend: Django, Python
-* AI: Google Gemini API
-* Charts: Matplotlib
-* Stock Data: Alpha Vantage API
-* Frontend: HTML, CSS, JavaScript
-
-## To-Do / Improvements
-
-* Add user authentication
-* Expand chatbot functionality
-* Save user queries and analysis history
-* Support for more stock indicators
-* add support for crypto
+* Python
+* Django
+* Alpha Vantage API
+* Google Gemini API
+* Matplotlib
+* HTML, CSS, JavaScript
