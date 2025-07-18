@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Maksim's Stock Data Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1e1e1e;
+            color: #f5f5dc;
+            padding: 40px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        nav {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 20px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: #f5f5dc;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background-color: #2a2a2a;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #444;
+        }
+
+        h2 {
+            color: #f5f5dc;
+            border-bottom: 1px solid #555;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+
+        form {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+
+        input, select, textarea {
+            background-color: #1e1e1e;
+            color: #f5f5dc;
+            border: 1px solid #555;
+            padding: 8px;
+            border-radius: 6px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #f5f5dc;
+            color: #1e1e1e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #eaeac4;
+        }
+
+        img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #2a2a2a;
+        }
+
+        .insight-box, .error-box {
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .error-box {
+            color: #ffaaaa;
+            border-left: 4px solid #ff4d4d;
+            background-color: #3a1e1e;
+        }
+
+        .badge-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .badge {
+            font-size: 16px;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            color: #1e1e1e;
+            background-color: #f5f5dc;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .buy {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .sell {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .hold {
+            background-color: #ffc107;
+            color: #1e1e1e;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background-color: #2a2a2a;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead tr {
+            background-color: #444;
+        }
+
+        thead th {
+            padding: 12px 15px;
+            color: #f5f5dc;
+            text-align: left;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #555;
+            transition: background-color 0.25s ease;
+        }
+
+        tbody tr:hover {
+            background-color: #3a3a3a;
+        }
+
+        tbody td {
+            padding: 12px 15px;
+            color: #ddd;
+        }
+
+        .top-gainer {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #333;
+            border-radius: 8px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.6);
+            font-weight: bold;
+            color: #ddd;
+            font-size: 18px;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 0.9em;
+            color: #bbb;
+            text-align: center;
+            line-height: 1.5;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        footer a {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/terminology/">Terminology</a>
+        <a href="/stock-chatbot/">Stock Chatbot</a>
+    </nav>
+
+    <h2>Max's Stock Data Viewer</h2>
+
+
+    {% if insight %}
+        <div class="insight-box">
+            <h2>Gemini AI Insight</h2>
+            <p>{{ insight }}</p>
+        </div>
+        <div style="height: 30px;"></div> 
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
+
+    {% if recommendation %}
+        <div class="badge-container">
+            <span class="badge {{ recommendation|lower }}">
+                Recommendation: {{ recommendation }}
+            </span>
+        </div>
+    {% endif %}
+
+    {% if chart %}
+        <h2>Closing Price</h2>
+        <img src="{{ chart }}" alt="Closing Price Chart">
+    {% endif %}
+
+    {% if volume_chart %}
+        <h2>Volume</h2>
+        <img src="{{ volume_chart }}" alt="Volume Chart">
+    {% endif %}
+    {% if error %}
+        <div class="error-box">
+            <strong>Error:</strong> {{ error }}
+        </div>
+    {% endif %}
+
+
+    <h2>Top 10 Popular Stocks</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Company</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>AAPL</td><td>Apple Inc.</td></tr>
+            <tr><td>TSLA</td><td>Tesla Inc.</td></tr>
+            <tr><td>GOOG</td><td>Alphabet Inc.</td></tr>
+            <tr><td>AMZN</td><td>Amazon.com Inc.</td></tr>
+            <tr><td>MSFT</td><td>Microsoft Corp.</td></tr>
+            <tr><td>META</td><td>Meta Platforms Inc.</td></tr>
+            <tr><td>NVDA</td><td>NVIDIA Corp.</td></tr>
+            <tr><td>NFLX</td><td>Netflix Inc.</td></tr>
+            <tr><td>BRK.B</td><td>Berkshire Hathaway Inc.</td></tr>
+            <tr><td>JPM</td><td>JPMorgan Chase & Co.</td></tr>
+        </tbody>
+    </table>
+
+    <div style="background:#333; color:#f5f5dc; padding:15px; border-radius:8px; max-width:300px; margin:20px auto; text-align:center; font-weight:bold;">
+        Currency Exchange Rate<br>
+        1 USD = 0.85 EUR <br>
+    </div>
+
+    <footer>
+        <p>
+            This website is owned and operated by Maksim Nikolov, a 15-year-old high school student at <em>Fort Mill High School</em>.
+        </p>
+        <p>
+            Maksim built this site to learn about stocks.
+        </p>
+        <p>
+            My Social Media:
+            <br>
+             <a href="https://www.instagram.com/Maksimnikolov77" target="_blank">Instagram @Maksimnikolov77</a> &nbsp;&nbsp;|&nbsp;&nbsp;
+             <a href="https://snapchat.com/add/milky.moksim" target="_blank">Snapchat @milky.moksim</a> &nbsp;&nbsp;|&nbsp;&nbsp;
+             <a href="https://www.tiktok.com/@milky.moksim" target="_blank">TikTok @milky.moksim</a> &nbsp;&nbsp;|&nbsp;&nbsp;
+             <a href="https://twitter.com/maksimnikolov77" target="_blank">X @MaksimN68260</a>
+        </p>
+    </footer>
+</body>
+</html>
