@@ -1,6 +1,4 @@
-Sure! Here's a clean, all-text version of your `README.md` without any emojis or images:
 
----
 
 ````markdown
 # Django Stock Viewer
