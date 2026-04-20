@@ -15,8 +15,8 @@ import datetime
 import json
 
 # API Keys
-ALPHA_VANTAGE_API_KEY = 'NI8CF4AA1T164B1X'
-GEMINI_API_KEY = 'AIzaSyBPvZbi_l23Fx9DhFRdbNy_RILYskdeMN0'
+ALPHA_VANTAGE_API_KEY = 'API_key'
+GEMINI_API_KEY = 'API_Key'
 
 genai.configure(api_key=GEMINI_API_KEY)
 
